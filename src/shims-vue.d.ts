@@ -4,7 +4,12 @@ declare module '*.vue' {
 }
 
 
-declare class Link{
+declare class Tab {
+  name: string
+  links?: Link[]
+}
+
+declare class Link {
   title: string
   url: string
   icon?: string

@@ -1,8 +1,6 @@
 <template>
-  <div class="card" @click="openlink()">
-    <div class="c-icon">
-      <img :src="linkinfo.icon" alt srcset />
-    </div>
+  <div class="link-card card" @click="openlink()">
+    <img class="c-icon" :src="iconlink" alt srcset />
     <div class="c-title">{{linkinfo.title}}</div>
   </div>
 </template>
@@ -14,31 +12,43 @@ import { Prop, Vue, Component } from "vue-property-decorator";
 export default class LinkCard extends Vue {
   @Prop() private linkinfo!: Link;
 
+  get iconlink() {
+    return this.linkinfo.icon || "/favicon.ico";
+  }
+
   openlink() {
-    console.log(this.linkinfo.url);
     window.open(this.linkinfo.url);
   }
 }
 </script>
 
-<style scoped>
-.card {
+<style>
+.link-card {
   position: relative;
-  display: inline-flex;
+  display: flex;
   cursor: pointer;
   height: 6rem;
-  min-width: 12rem;
-  align-items: flex-end;
+  width: 12rem;
+  align-items: center;
   justify-content: center;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem 0.5rem;
+  border-radius: 4px;
+  background-color: #fff;
 }
 
-.card:hover {
+.link-card:hover {
   box-shadow: 4px 4px 8px 0px rgb(172, 169, 169);
 }
 
 .c-icon {
   margin-right: 1rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.c-title {
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 </style>
