@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'https://navi.oldzeng.com/api'
+// if (process.env.NODE_ENV == 'production')
+// else
+//     axios.defaults.baseURL = 'http://localhost:3000'
+
+console.log(process.env.NODE_ENV)
+
 axios.interceptors.response.use(res => {
     if (res.status === 200) {
         return Promise.resolve(res.data)

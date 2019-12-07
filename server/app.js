@@ -13,8 +13,8 @@ app.use(cors());
 app.use(bodyparser());
 
 app.use(async (ctx, next) => {
-    const rt = ctx.response.get('X-Response-Time');
-    console.log(`${ctx.method} ${ctx.url} - ${rt}`);
+    // const rt = ctx.response.get('X-Response-Time');
+    // console.log(`${ctx.method} ${ctx.url} - ${rt}`);
     await next();
 });
 
