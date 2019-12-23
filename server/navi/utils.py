@@ -1,21 +1,21 @@
 from flask import Response, jsonify
-import pickle
+import jsonpickle
 import json
 import datetime
 
 
 def json_resp(jobj=None, status=200, errinfo=None):
     if status >= 200 and status < 300:
-        jsonstr = pickle.dumps(jobj, protocol=2)
-        jsonstr = json.dumps(jobj, ensure_ascii=False,
-                             default=datetime_handler)
+        jsonstr = jsonpickle.encode(jobj, unpicklable=False)
+        # jsonstr = json.dumps(jobj, ensure_ascii=False,
+        #                      default=datetime_handler)
         return Response(jsonstr, mimetype='application/json', status=status)
     else:
         return Response('{"errinfo":"%s"}' % (errinfo,), mimetype='application/json', status=status)
 
 
 def obj_to_dict(obj, exclude=None):
-    dict = obj.__dict__['__data__']
+    dict = obj.__dict__
     if exclude:
         for key in exclude:
             if key in dict:

@@ -1,10 +1,38 @@
 from navi.models import *
 from navi.utils import *
-
+from itertools import  groupby
 
 def get_links(userid):
-    # a = ntab(id=1, userid=1, title='ddd')
-    # b = ntab(id=2, userid=1, title='ddd')
-    # return list([a, b])
-    query = ntab.select()
-    return query_to_list(query)
+    query = Tab.select(Link,Tab.title.alias('tabtitle'))\
+        .join(Link)\
+        .where(Tab.userid == userid)\
+        .dicts()
+
+    # data = groupby(query)
+    return list(query)
+
+def find_user(username):
+    query = User.get((User.name == username) & (User.deletetime is not None))
+    return query
+
+
+def add_tab(tab: dict):
+    tab['createtime'] = datetime.datetime.now()
+    Tab.insert(tab).execute()
+
+
+def delete_tab(tabid):
+    Tab.update({Tab.deletetime : datetime.datetime.now()})\
+        .where(Tab.id == tabid)\
+        .execute()
+
+
+def add_link(link):
+    link['createtime'] = datetime.datetime.now()
+    Link.insert(link).execute()
+
+
+def delete_link(id):
+    Link.update({Link.deletetime: datetime.datetime.now()}) \
+        .where(Link.id == id) \
+        .execute()
