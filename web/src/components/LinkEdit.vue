@@ -32,7 +32,7 @@ export default class LinkEdit extends Vue {
   @Prop() tab!: string;
   @Prop() link?: Link;
 
-  private linkdata: Link = this.link || { title: "", url: "", icon: "" };
+  private linkdata: Link = this.link || new Link();
 
   private async send() {
     if (!this.checkedit()) return;
@@ -66,7 +66,7 @@ export default class LinkEdit extends Vue {
   }
 
   private clear() {
-    this.linkdata = { title: "", url: "", icon: "" };
+    this.linkdata = new Link()
   }
 }
 </script>

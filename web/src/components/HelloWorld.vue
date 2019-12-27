@@ -52,10 +52,10 @@ export default class HelloWorld extends Vue {
   }
 
   private async refresh() {
-    this.tabs = await server.data();
+    this.tabs = await server.data("me");
   }
 
-  private add(tab:string) {
+  private add(tab: string) {
     this.edit = {
       action: "add",
       tab: tab,
@@ -64,7 +64,7 @@ export default class HelloWorld extends Vue {
     this.showedit = true;
   }
 
-  private endEdit(val:string) {
+  private endEdit(val: string) {
     this.showedit = false;
     console.log(val);
     if (val !== "cancel") {

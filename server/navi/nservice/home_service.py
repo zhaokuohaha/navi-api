@@ -1,6 +1,6 @@
 from navi.models import *
 from navi.utils import *
-from itertools import  groupby
+from navi.nservice.tools import *
 
 def get_links(userid):
     query = Tab.select(Link,Tab.title.alias('tabtitle'))\
@@ -8,8 +8,7 @@ def get_links(userid):
         .where(Tab.userid == userid)\
         .dicts()
 
-    # data = groupby(query)
-    return list(query)
+    return  list(query)
 
 def find_user(username):
     query = User.get((User.name == username) & (User.deletetime is not None))
@@ -27,8 +26,14 @@ def delete_tab(tabid):
         .execute()
 
 
-def add_link(link):
+def add_link(link:dict):
     link['createtime'] = datetime.datetime.now()
+    if not('icon' in link.keys() and link['icon']):
+        (icon, bgcolor) = get_icon(link['url'])
+        link['icon'] = icon
+        link['bgcolor'] = bgcolor
+    if not('bgcolor' in link.keys() and link['bgcolor']):
+        link['bgcolor'] = get_bgcolor(link['icon'])
     Link.insert(link).execute()
 
 

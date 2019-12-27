@@ -1,17 +1,22 @@
 <template>
-  <div class="link-card card" @click="openlink()">
+  <div class="link-card card" :style="customStyle" @click="openlink()">
     <img class="c-icon" :src="iconlink" alt srcset />
     <div class="c-title">{{linkinfo.title}}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { Prop, Vue, Component } from "vue-property-decorator";
+import { Prop, Vue, Component, Provide } from "vue-property-decorator";
 
 @Component
 export default class LinkCard extends Vue {
   @Prop() private linkinfo!: Link;
 
+  get customStyle() {
+    return {
+      backgroundColor: this.linkinfo.bgcolor || "#fff"
+    };
+  }
   get iconlink() {
     return this.linkinfo.icon || "/favicon.ico";
   }
@@ -34,7 +39,6 @@ export default class LinkCard extends Vue {
   padding: 1rem;
   margin: 1rem 0.5rem;
   border-radius: 4px;
-  background-color: #fff;
 }
 
 .link-card:hover {

@@ -2,10 +2,12 @@ from flask import Flask
 from config import config
 # from flask_jwt import JWT
 from navi.auth import *
+from flask_cors import CORS
 
 
 def create_app(cfg):
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config[cfg])
     config[cfg].init_app(app)
     # jwt = JWT(app, authenticate, identity)

@@ -5,12 +5,30 @@ declare module '*.vue' {
 
 
 declare class Tab {
+  id: number
   name: string
-  links?: Link[]
+  links: Link[]
 }
 
 declare class Link {
+  id: number
   title: string
   url: string
   icon?: string
+  bgcolor?: string
+  createtime?: Date
+  deletetime?: Date
+}
+
+declare class LinkDto {
+  tabid: number
+  tabtitle: string
+
+  id: number
+  title: string
+  url: string
+  icon?: string
+  bgcolor?: string
+  createtime: Date
+  deletetime: Date
 }
