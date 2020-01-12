@@ -32,11 +32,25 @@ def create_link():
     h_service.add_link(link)
     return json_resp()
 
+
+@napi.route('/api/link', methods=['PATCH'])
+def update_link():
+    link = request.json
+    h_service.update_link(link)
+    return json_resp()
+
 @napi.route('/api/link/<linkid>', methods=['DELETE'])
 def delate_link(linkid: int):
     h_service.delete_link(linkid)
     return json_resp()
 
+@napi.route('/api/check/<user>', methods=['POST'])
+def login(user:str):
+    pwd = request.json['pwd']
+    res = h_service.login(user, pwd)
+    if not res:
+        return json_resp(status=403, errinfo='密码错误')
+    return json_resp()
 
 @napi.route('/')
 def test():

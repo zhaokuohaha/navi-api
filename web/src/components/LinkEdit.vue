@@ -15,7 +15,8 @@
         <input type="text" placeholder="图标URL" v-model="linkdata.icon" />
       </div>
       <div class="foot">
-        <button @click="send()">添加</button> &nbsp;
+        <button v-if="action == model.action.add" @click="add()">添加</button> &nbsp;
+        <button v-if="action == model.action.update" @click="update()">保存</button> &nbsp;
         <button class="pseudo" @click="cancel()">取消</button>
       </div>
     </div>
@@ -23,22 +24,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from "vue-property-decorator";
+import { Component, Vue, Prop, Emit, Watch } from "vue-property-decorator";
 import server from "../server";
+import * as model from "./model";
 
 @Component
 export default class LinkEdit extends Vue {
-  @Prop() action!: string;
-  @Prop() tab!: string;
-  @Prop() link?: Link;
+  @Prop() action!: model.action;
+  @Prop() tab!: number;
+  @Prop() link!: Link;
 
-  private linkdata: Link = this.link || new Link();
+  private linkdata: Link = this.link;
+  private model = model;
 
-  private async send() {
+  private async add() {
     if (!this.checkedit()) return;
     await server.addLink(this.tab, this.linkdata);
-    this.$emit("result", "add");
-    this.clear();
+    this.$emit("result", model.action.add);
+  }
+
+  private async update() {
+    if (!this.checkedit()) return;
+    await server.changeLink(this.linkdata);
+    this.$emit("result", model.action.update);
   }
 
   private checkedit() {
@@ -61,12 +69,13 @@ export default class LinkEdit extends Vue {
   }
 
   private cancel() {
-    this.$emit("result", "cancel");
-    this.clear();
+    this.linkdata = JSON.parse(JSON.stringify(this.link));
+    this.$emit("result", model.action.cancel);
   }
 
-  private clear() {
-    this.linkdata = new Link()
+  @Watch("link")
+  private linkChange(val: Link) {
+    this.linkdata = JSON.parse(JSON.stringify(val));
   }
 }
 </script>

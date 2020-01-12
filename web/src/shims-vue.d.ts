@@ -12,6 +12,7 @@ declare class Tab {
 
 declare class Link {
   id: number
+  tabid: number
   title: string
   url: string
   icon?: string

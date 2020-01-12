@@ -5,7 +5,7 @@ from navi.nservice.tools import *
 def get_links(userid):
     query = Tab.select(Link,Tab.title.alias('tabtitle'))\
         .join(Link)\
-        .where(Tab.userid == userid)\
+        .where((Tab.userid == userid) & (Link.deletetime.is_null()))\
         .dicts()
 
     return  list(query)
@@ -27,6 +27,7 @@ def delete_tab(tabid):
 
 
 def add_link(link:dict):
+    link['id'] = None
     link['createtime'] = datetime.datetime.now()
     if not('icon' in link.keys() and link['icon']):
         (icon, bgcolor) = get_icon(link['url'])
@@ -36,8 +37,26 @@ def add_link(link:dict):
         link['bgcolor'] = get_bgcolor(link['icon'])
     Link.insert(link).execute()
 
+def update_link(link:dict):
+   if 'id' not in link:
+       return
+   curlink = Link.get_by_id(link['id'])
+   curlink.title = link['title']
+   curlink.url = link['url']
+   if 'bgcolor' in link and link['bgcolor']:
+       curlink.bgcolor=link['bgcolor']
+   if 'icon' in link and link['icon']:
+        curlink.icon = link['icon']
+   curlink.save()
+
+
 
 def delete_link(id):
     Link.update({Link.deletetime: datetime.datetime.now()}) \
         .where(Link.id == id) \
         .execute()
+
+
+def login(user:str, pwd:str):
+    user = find_user(user)
+    return user.pwd == pwd

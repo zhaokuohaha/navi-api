@@ -37,4 +37,8 @@ export default class App extends Vue {}
   height: 8rem;
   border-radius: 8rem;
 }
+
+.icon-btn {
+  cursor: pointer;
+}
 </style>

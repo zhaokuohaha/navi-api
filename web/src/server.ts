@@ -34,12 +34,19 @@ class Server {
         return res
     }
 
-    async changeLink(data: Link, tabname: string, linkname: string) {
-        return await axios.patch(`/api/link?link=${linkname}&tab=${tabname}`, data)
+    async changeLink(data: Link) {
+        return await axios.patch('/api/link', data)
     }
 
-    async addLink(tabname: string, data: Link) {
-        return await axios.post(`/api/link?tab=${tabname}`, data)
+    async addLink(tabid: number, data: Link) {
+        if (!data.tabid)
+            data.tabid = tabid
+        return await axios.post(`/api/link`, data)
+    }
+
+    async deletelink(id: number): Promise<boolean> {
+        let res = await axios.delete(`/api/link/${id}`)
+        return res == null
     }
 
     async changeTab(tabname: string) {

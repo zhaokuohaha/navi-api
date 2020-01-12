@@ -12,8 +12,9 @@ db = MySQLDatabase(host=cfg.DB_HOST,
 
 
 class BaseMode(Model):
-    class Meta:
-        database = db
+    # class Meta:
+    #     database = db
+    pass
 
 
 class User(BaseMode):
@@ -24,6 +25,7 @@ class User(BaseMode):
     deletetime = DateTimeField(default=None)
 
     class Meta:
+        database = db
         table_name = 'nuser'
 
 
@@ -35,6 +37,7 @@ class Tab(BaseMode):
     deletetime = DateTimeField(default=None)
 
     class Meta:
+        database = db
         table_name = 'ntab'
 
 
@@ -49,4 +52,5 @@ class Link(BaseMode):
     tabid = ForeignKeyField(Tab, column_name="tabid", backref="links")
 
     class Meta:
+        database = db
         table_name = 'nlink'

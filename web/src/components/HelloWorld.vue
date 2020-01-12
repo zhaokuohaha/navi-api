@@ -3,23 +3,31 @@
     <!-- <div class="center input-box">
       <input type="text" />
     </div>-->
+    <div class="menu-wrapper">
+      <i class="icon-btn icono-sliders" @click="tryEdit()"></i>
+    </div>
     <div class="tabs">
       <div v-for="(tab, index) in tabs" :key="index" class="group">
         <div class="tab-name">{{tab.name}}</div>
         <div class="tab-content">
           <div class="card-container" v-for="(link, index) in tab.links" :key="index">
-            <Card :linkinfo="link"></Card>
+            <Card
+              :linkinfo="link"
+              :edit="canedit"
+              @edit="editlink(link, tab.name)"
+              @delete="deletelink(link)"
+            ></Card>
           </div>
-          <div class="card-container">
-            <div class="link-card add-link" @click="add(tab.name)">+</div>
+          <div class="card-container" v-show="canedit">
+            <div class="link-card add-link" @click="add(tab.id)">+</div>
           </div>
         </div>
       </div>
       <Edit
         v-show="showedit"
-        :action="edit.action"
-        :tab="edit.tab"
-        :link="edit.link"
+        :action="editdata.action"
+        :tab="editdata.tab"
+        :link="editdata.link"
         @result="endEdit"
       ></Edit>
     </div>
@@ -33,6 +41,7 @@ import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import Card from "./LinkCard.vue";
 import Edit from "./LinkEdit.vue";
 import server from "../server";
+import * as model from "./model";
 
 @Component({
   components: { Card, Edit }
@@ -41,9 +50,11 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
   private tabs: Tab[] = [];
   private showedit = false;
-  private edit = {
-    action: "add",
-    tab: "",
+  private canedit = false;
+
+  private editdata = {
+    action: model.action.default,
+    tab: -1,
     link: {}
   };
 
@@ -52,24 +63,51 @@ export default class HelloWorld extends Vue {
   }
 
   private async refresh() {
-    this.tabs = await server.data("me");
+    let u = this.$route.params.user;
+    if (!u) {
+      u = "me";
+      this.$router.push("/me");
+    }
+    this.tabs = await server.data(u);
   }
 
-  private add(tab: string) {
-    this.edit = {
-      action: "add",
+  private add(tab: number) {
+    this.editdata = {
+      action: model.action.add,
       tab: tab,
       link: {}
     };
     this.showedit = true;
   }
 
-  private endEdit(val: string) {
-    this.showedit = false;
-    console.log(val);
-    if (val !== "cancel") {
+  private editlink(link: Link) {
+    console.log("编辑", link);
+    this.editdata = {
+      action: model.action.update,
+      tab: link.tabid,
+      link: link
+    };
+    this.showedit = true;
+  }
+
+  private async deletelink(link: Link) {
+    let result = await server.deletelink(link.id);
+    if (result) {
+      console.log("移除" + link.title);
       this.refresh();
     }
+  }
+
+  private endEdit(val: model.action) {
+    this.showedit = false;
+    console.log(val);
+    if (val !== model.action.cancel) {
+      this.refresh();
+    }
+  }
+
+  private tryEdit() {
+    this.canedit = !this.canedit;
   }
 }
 </script>
@@ -112,5 +150,11 @@ export default class HelloWorld extends Vue {
   font-weight: bold;
   color: whitesmoke;
   text-shadow: 1px 3px 3px #497275, 0 0 0 #000;
+}
+
+.menu-wrapper {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 </style>
