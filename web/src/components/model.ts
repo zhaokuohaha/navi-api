@@ -16,3 +16,8 @@ export class Link {
     createtime?: Date
     deletetime?: Date
 }
+
+export class User {
+    name = ''
+    pwd = ''
+}

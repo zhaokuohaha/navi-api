@@ -21,3 +21,5 @@ yarn-error.log*
 *.sw?
 /server/config.py
 __pycache__
+server/.env
+server/.env

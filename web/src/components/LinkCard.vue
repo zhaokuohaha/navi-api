@@ -4,10 +4,10 @@
     <div class="c-title">{{linkinfo.title}}</div>
     <div class="link-option" v-show="edit">
       <div class="lo-edit" @click.stop="editlink">
-        <i class="icono-gear"></i>
+        <img src="../assets/edit.svg" alt class="img-icon" />
       </div>
       <div class="lo-delet" @click.stop="deletelink">
-        <i class="icono-trash"></i>
+        <i class="icono-trash" style="color: tomato;"></i>
       </div>
     </div>
   </div>
@@ -96,6 +96,5 @@ export default class LinkCard extends Vue {
   right: 0;
   top: 0;
   padding: 8px;
-  background-color: tomato;
 }
 </style>

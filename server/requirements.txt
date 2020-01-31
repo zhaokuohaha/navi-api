@@ -4,3 +4,4 @@ flask
 flask-JWT
 flask-script
 jsonpickle
+dotenv

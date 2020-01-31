@@ -4,6 +4,11 @@ declare module '*.vue' {
 }
 
 
+declare class User {
+  name: string
+  pwd: string
+}
+
 declare class Tab {
   id: number
   name: string
