@@ -1,8 +1,7 @@
 from . import napi
 from navi.utils import json_resp
 import navi.nservice.home_service as h_service
-from ..models import Tab, Link
-from flask import request,jsonify
+from flask import request
 from flask_jwt import jwt_required, current_identity
 
 @napi.route('/api/data', methods=['GET'])
