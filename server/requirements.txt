@@ -1,6 +1,9 @@
 peewee
 flask
 flask-JWT
-dotenv
+python-dotenv
 tldextract
 colorthief
+flask-cors
+jsonpickle
+flask_script

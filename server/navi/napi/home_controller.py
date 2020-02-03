@@ -9,9 +9,9 @@ from flask_jwt import jwt_required, current_identity
 def get_data(username: str=None):
     if username is None:
         return json_resp(status=400, errinfo='未实现')
-    if(username is None):
-        return json_resp(status=404, errinfo='未找到路径')
     user = h_service.find_user(username)
+    if(not  user):
+        return json_resp(status=404, errinfo='未找到路径')
     data = h_service.get_links(user.id)
     return json_resp(data)
 
