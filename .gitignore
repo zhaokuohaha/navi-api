@@ -26,3 +26,11 @@ server/.env
 api/.vs
 api/bin
 api/obj
+api/Fcz.Navi.Api.WebApi/obj
+api/Fcz.Navi.Api.WebApi/bin
+api/Fcz.Navi.Api.Services/bin
+api/Fcz.Navi.Api.Services/obj
+api/Fcz.Navi.Api.Repositories/bin
+api/Fcz.Navi.Api.Repositories/obj
+api/Fcz.Navi.Api.Models/bin
+api/Fcz.Navi.Api.Models/obj

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fcz.Navi.Api.Models\Fcz.Navi.Api.Models.csproj" />
+    <ProjectReference Include="..\Fcz.Navi.Api.Repositories\Fcz.Navi.Api.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>
