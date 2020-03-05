@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Fcz.Navi.Api.Models\Fcz.Navi.Api.Models.csproj" />
     <ProjectReference Include="..\Fcz.Navi.Api.Repositories\Fcz.Navi.Api.Repositories.csproj" />
   </ItemGroup>

@@ -9,5 +9,6 @@ namespace Fcz.Navi.Api.Services
 	public interface IUserService
 	{
 		Task AddUserAsync(UserDto userDto);
+		Task<IEnumerable<string>> GetUsersAsync();
 	}
 }

@@ -9,5 +9,6 @@ namespace Fcz.Navi.Api.Repositories
 	public interface IUserRepository
 	{
 		Task AddUserAsync(User user);
+		Task<IEnumerable<User>> GetUsersAsync();
 	}
 }

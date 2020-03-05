@@ -2,6 +2,7 @@
 using Fcz.Navi.Api.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,12 @@ namespace Fcz.Navi.Api.Services
 		{
 			var user = new User();
 			await _repo.AddUserAsync(user);
+		}
+
+		public async Task<IEnumerable<string>> GetUsersAsync()
+		{
+			var users = await _repo.GetUsersAsync();
+			return users.Select(u => u.Name);
 		}
 	}
 }

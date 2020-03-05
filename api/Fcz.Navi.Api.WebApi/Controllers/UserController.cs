@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fcz.Navi.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
@@ -18,10 +18,18 @@ namespace Fcz.Navi.Api.Controllers
         {
             _service = userService;
         }
+
         [HttpPost]
         public async Task AddUser(UserDto userDto)
         {
             await _service.AddUserAsync(userDto);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<string>>> GetUsers()
+        {
+	        var users = await _service.GetUsersAsync();
+	        return Ok(users);
         }
     }
 }
