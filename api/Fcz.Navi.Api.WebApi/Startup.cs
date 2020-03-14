@@ -42,7 +42,12 @@ namespace Fcz.Navi.Api
 			services.AddCors(options =>
 			{
 				options.AddPolicy(NaviOrigin,
-					builder => { builder.WithOrigins("http://localhost:8080", "https://navi.oldzeng.com"); });
+					builder => {
+						builder
+						.WithOrigins("http://localhost:8080", "https://navi.oldzeng.com")
+						.AllowAnyMethod()
+						.AllowAnyHeader(); 
+					});
 			});
 
 			// 使用小写路径
