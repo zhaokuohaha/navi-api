@@ -1,4 +1,5 @@
 using Fcz.Navi.Api.Services;
+using Fcz.Navi.Api.WebApi.MiddleWares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 namespace Fcz.Navi.Api
 {
@@ -22,7 +24,14 @@ namespace Fcz.Navi.Api
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
+			services
+				.AddControllers()
+				.AddJsonOptions(options => {
+					// 返回body字段全部改成小写
+					options.JsonSerializerOptions.PropertyNamingPolicy = new LowerJsonNamingPolicy();
+					// 接收参数忽略大小写
+					options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+				});
 			//services.AddSingleton<IServiceProvider>();
 			
 			services.AddNaviService(Configuration);
@@ -36,10 +45,11 @@ namespace Fcz.Navi.Api
 					builder => { builder.WithOrigins("http://localhost:8080", "https://navi.oldzeng.com"); });
 			});
 
+			// 使用小写路径
 			services.AddRouting(options =>
 			{
 				options.LowercaseUrls = true;
-				options.LowercaseUrls = true;
+				options.LowercaseQueryStrings = true;
 			});
 		}
 
