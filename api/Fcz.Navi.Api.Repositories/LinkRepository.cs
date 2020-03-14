@@ -1,8 +1,10 @@
 ﻿using Fcz.Navi.Api.Models.Dtos;
 using Fcz.Navi.Api.Models.Entities;
+using Fcz.Navi.Api.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,6 +55,16 @@ namespace Fcz.Navi.Api.Repositories
 		{
 			_context.Links.Update(link);
 			await _context.SaveChangesAsync();
+		}
+
+		public async Task Delete(int id)
+		{
+			var link = await Find(id);
+			if (link == null)
+				throw new FakeHttpException(HttpStatusCode.NotFound);
+
+			link.DeleteTime = DateTime.Now;
+			await Update(link);
 		}
 	}
 }

@@ -55,12 +55,7 @@ namespace Fcz.Navi.Api.Services
 
 		public async Task Delete(int id)
 		{
-			var link = await _repo.Find(id);
-			if (link == null)
-				throw new FakeHttpException(HttpStatusCode.NotFound);
-
-			link.DeleteTime = DateTime.Now;
-			await _repo.Update(link);
+			await _repo.Delete(id);
 		}
 	}
 }

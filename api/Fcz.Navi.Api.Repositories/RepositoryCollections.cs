@@ -14,6 +14,7 @@ namespace Fcz.Navi.Api.Repositories
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<ILinkRepository, LinkRepository>();
+			services.AddTransient<ITabRepository, TabRepository>();
 			return services;
 		}
 	}

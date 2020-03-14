@@ -13,5 +13,6 @@ namespace Fcz.Navi.Api.Repositories
 		Task<Link> Find(int id);
 		Task Update(Link link);
 		Task Insert(Link link);
+		Task Delete(int id);
 	}
 }
