@@ -20,7 +20,7 @@ namespace Fcz.Navi.Api.Repositories
 
 		public async Task<IEnumerable<User>> GetUsersAsync()
 		{
-			return _context.Users;//.Where(u => u.DeleteTime == null);
+			return _context.Users.Where(u => u.DeleteTime == null);
 		}
 	}
 }
