@@ -21,10 +21,10 @@ namespace Fcz.Navi.Api.Repositories
 			if (string.IsNullOrEmpty(userName))
 				return Enumerable.Empty<LinkDataDto>();
 
-			//var data = _context.Users.Where(u => u.Name.Equals(userName, StringComparison.OrdinalIgnoreCase));
 			var data = from user in _context.Users
 					   join tab in _context.Tabs on user.Id equals tab.UserId
-					   join link in _context.Links on tab.Id equals link.TabId
+					   join link in _context.Links on tab.Id equals link.TabId into glink
+					   from link in glink.DefaultIfEmpty()	// Left Join 语法
 					   where user.Name.Equals(userName) && !user.DeleteTime.HasValue && !link.DeleteTime.HasValue
 					   select new LinkDataDto
 					   {
