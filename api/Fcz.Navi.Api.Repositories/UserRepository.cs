@@ -13,9 +13,9 @@ namespace Fcz.Navi.Api.Repositories
 		}
 
 
-		public Task AddUserAsync(User user)
+		public async Task AddUserAsync(User user)
 		{
-			return Task.Delay(1000);
+			await _context.AddAsync(user);
 		}
 
 		public async Task<IEnumerable<User>> GetUsersAsync()

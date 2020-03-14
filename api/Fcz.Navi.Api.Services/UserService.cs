@@ -20,7 +20,11 @@ namespace Fcz.Navi.Api.Services
 
 		public async Task AddUserAsync(UserDto userDto)
 		{
-			var user = new User();
+			var user = new User { 
+				Name = userDto.Name,
+				Pwd = userDto.Pwd,
+				CreateTime = DateTime.Now
+			};
 			await _repo.AddUserAsync(user);
 		}
 
