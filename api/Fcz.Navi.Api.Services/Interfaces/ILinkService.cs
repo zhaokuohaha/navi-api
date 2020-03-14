@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Fcz.Navi.Api.Models.Dtos;
 
 namespace Fcz.Navi.Api.Services
 {
 	public interface ILinkService
 	{
-		Task<LinkDataDto> GetLinkDataAsync(string userName);
+		Task<IEnumerable<LinkDataDto>> GetLinkDataAsync(string userName);
 	}
 }

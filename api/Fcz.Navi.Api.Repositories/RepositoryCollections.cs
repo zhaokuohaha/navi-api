@@ -13,6 +13,7 @@ namespace Fcz.Navi.Api.Repositories
 				options.UseMySql(conf.GetConnectionString("Navi")));
 
 			services.AddTransient<IUserRepository, UserRepository>();
+			services.AddTransient<ILinkRepository, LinkRepository>();
 			return services;
 		}
 	}

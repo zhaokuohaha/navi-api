@@ -14,5 +14,7 @@ namespace Fcz.Navi.Api.Models.Entities
 		public DateTime? CreateTime { get; set; }
 
 		public DateTime? DeleteTime { get; set; }
+
+
 	}
 }

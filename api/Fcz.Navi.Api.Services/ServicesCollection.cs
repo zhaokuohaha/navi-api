@@ -12,6 +12,7 @@ namespace Fcz.Navi.Api.Services
 			services.AddRepositories(conf);
 
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<ILinkService, LinkService>();
 			return services;
 		}
 	}

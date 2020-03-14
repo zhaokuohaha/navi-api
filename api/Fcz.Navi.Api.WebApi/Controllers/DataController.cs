@@ -23,7 +23,7 @@ namespace Fcz.Navi.Api.Controllers
 			var data = await _linkService.GetLinkDataAsync(userName);
 			if (data == null)
 				return NotFound();
-			return Ok(data);
+			return Ok(data); 
 		}
 	}
 }
