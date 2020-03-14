@@ -19,7 +19,7 @@
     },
     "Fcz.Navi.Api": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "doc",
       "applicationUrl": "http://localhost:5002",
       "environmentVariables": {

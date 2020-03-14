@@ -7,7 +7,7 @@ using Microsoft.Extensions.FileSystemGlobbing.Internal;
 namespace Fcz.Navi.Api.Controllers
 {
 	[ApiController]
-	[Route("api/controller")]
+	[Route("api/[controller]")]
 	public class DataController : ControllerBase
 	{
 		private readonly ILinkService _linkService;
@@ -17,7 +17,7 @@ namespace Fcz.Navi.Api.Controllers
 			_linkService = linkService;
 		}
 
-		[HttpGet("userName")]
+		[HttpGet("{userName}")]
 		public async Task<ActionResult<LinkDataDto>> GetLinkData(string userName)
 		{
 			var data = await _linkService.GetLinkDataAsync(userName);

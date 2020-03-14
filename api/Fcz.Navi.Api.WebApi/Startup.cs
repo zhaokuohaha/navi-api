@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace Fcz.Navi.Api
@@ -16,6 +17,7 @@ namespace Fcz.Navi.Api
 		}
 
 		public IConfiguration Configuration { get; }
+		private readonly string NaviOrigin = "AllowOrigin";
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -27,6 +29,17 @@ namespace Fcz.Navi.Api
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Navi接口列表", Version = "v1" });
+			});
+			services.AddCors(options =>
+			{
+				options.AddPolicy(NaviOrigin,
+					builder => { builder.WithOrigins("http://localhost:8080", "https://navi.oldzeng.com"); });
+			});
+
+			services.AddRouting(options =>
+			{
+				options.LowercaseUrls = true;
+				options.LowercaseUrls = true;
 			});
 		}
 
@@ -46,6 +59,7 @@ namespace Fcz.Navi.Api
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Navi接口列表-V1");
 				c.RoutePrefix = "doc";
 			});
+			app.UseCors(NaviOrigin);
 
 			app.UseRouting();
 
