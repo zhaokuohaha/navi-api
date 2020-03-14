@@ -37,5 +37,22 @@ namespace Fcz.Navi.Api.Repositories
 					   };
 			return data;		
 		}
+
+		public async Task<Link> Find(int id)
+		{
+			return await _context.Links.FindAsync(id);
+		}
+
+		public async Task Insert(Link link)
+		{
+			await _context.Links.AddAsync(link);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task Update(Link link)
+		{
+			_context.Links.Update(link);
+			await _context.SaveChangesAsync();
+		}
 	}
 }
