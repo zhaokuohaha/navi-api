@@ -23,5 +23,10 @@ namespace Fcz.Navi.Api.Repositories
 		{
 			return _context.Users.Where(u => u.DeleteTime == null);
 		}
+
+		public async Task<User> Get(string name)
+		{
+			return _context.Users.FirstOrDefault(u => u.Name == name && !u.DeleteTime.HasValue);
+		}
 	}
 }

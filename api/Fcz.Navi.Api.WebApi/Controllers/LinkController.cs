@@ -1,6 +1,7 @@
 ﻿using Fcz.Navi.Api.Models.Dtos;
 using Fcz.Navi.Api.Models.Entities;
 using Fcz.Navi.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Fcz.Navi.Api.WebApi.Controllers
 		}
 
 		[HttpPatch]
+		[Authorize]
 		public async Task<ActionResult> Edit([FromBody]LinkDataDto dto)
 		{
 			if (dto.Id <= 0 || dto.TabId <= 0)

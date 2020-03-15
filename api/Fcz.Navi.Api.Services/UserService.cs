@@ -33,5 +33,15 @@ namespace Fcz.Navi.Api.Services
 			var users = await _repo.GetUsersAsync();
 			return users.Select(u => u.Name);
 		}
+
+		public async Task<User> Get(string name)
+		{
+			return await _repo.Get(name);
+		}
+
+		public bool CheckPwd(User user, string password)
+		{
+			return user.Pwd == password;
+		}
 	}
 }

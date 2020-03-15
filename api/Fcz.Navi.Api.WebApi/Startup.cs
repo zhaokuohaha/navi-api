@@ -8,6 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Fcz.Navi.Api.Models.Dtos;
 
 namespace Fcz.Navi.Api
 {
@@ -32,13 +36,14 @@ namespace Fcz.Navi.Api
 					// 接收参数忽略大小写
 					options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 				});
-			//services.AddSingleton<IServiceProvider>();
 			
 			services.AddNaviService(Configuration);
+
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Navi接口列表", Version = "v1" });
 			});
+
 			services.AddCors(options =>
 			{
 				options.AddPolicy(NaviOrigin,
@@ -55,6 +60,27 @@ namespace Fcz.Navi.Api
 			{
 				options.LowercaseUrls = true;
 				options.LowercaseQueryStrings = true;
+			});
+
+
+			var tokenParam = new TokenValidationParameters
+			{
+				ValidateIssuer = true,
+				ValidateAudience = true,
+				ValidAudience = Configuration["Jwt:Audience"],
+				ValidIssuer = Configuration["Jwt:Issuer"],
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+			};
+			services.AddSingleton(s => tokenParam);
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;// "JWT";
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // "JWT";
+			}).AddJwtBearer(options =>
+			{
+				options.SaveToken = true;
+				options.RequireHttpsMetadata = false;
+				options.TokenValidationParameters = tokenParam;
 			});
 		}
 
@@ -77,9 +103,8 @@ namespace Fcz.Navi.Api
 			app.UseCors(NaviOrigin);
 
 			app.UseRouting();
-
+			app.UseAuthentication();
 			app.UseAuthorization();
-
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using Fcz.Navi.Api.Models.Dtos;
+using Fcz.Navi.Api.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,7 @@ namespace Fcz.Navi.Api.Services
 	{
 		Task AddUserAsync(UserDto userDto);
 		Task<IEnumerable<string>> GetUsersAsync();
+		Task<User> Get(string name);
+		bool CheckPwd(User user, string password);
 	}
 }

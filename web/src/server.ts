@@ -86,7 +86,7 @@ class Server {
                 password: pwd
             })
             if (res.access_token) {
-                axios.defaults.headers.common['Authorization'] = `JWT ${res.access_token}`
+                axios.defaults.headers.common['Authorization'] = `Bearer ${res.access_token}`
                 return true
             }
             return false;
