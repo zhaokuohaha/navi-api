@@ -22,10 +22,20 @@ namespace Fcz.Navi.Api.WebApi.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<ActionResult> Create([FromBody] Link link)
 		{
+			if (string.IsNullOrWhiteSpace(link.Url) || !IsUri())
+				return BadRequest("闹?! 写个合理的URL不好么");
+
 			await _linkService.Create(link);
 			return Ok();
+
+			bool IsUri()
+			{
+				try { new Uri(link.Url); return true; }
+				catch { return false; }
+			}
 		}
 
 		[HttpPatch]
@@ -39,6 +49,7 @@ namespace Fcz.Navi.Api.WebApi.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[Authorize]
 		public async Task<ActionResult<bool>> Delete(int id)
 		{
 			if (id <= 0)

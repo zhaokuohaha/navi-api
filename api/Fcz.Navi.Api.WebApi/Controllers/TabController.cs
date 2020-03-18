@@ -1,5 +1,6 @@
 ﻿using Fcz.Navi.Api.Models.Entities;
 using Fcz.Navi.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,14 @@ namespace Fcz.Navi.Api.WebApi.Controllers
         }
 
         [HttpPatch]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] Tab tab)
         {
             return BadRequest("未实现");
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> AddTab([FromBody] Tab tab)
         {
             await _tabService.Create(tab);
@@ -32,6 +35,7 @@ namespace Fcz.Navi.Api.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteTab(int id)
         {
             await _tabService.Delete(id);

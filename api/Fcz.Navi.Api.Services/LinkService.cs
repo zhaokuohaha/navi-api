@@ -7,6 +7,7 @@ using Fcz.Navi.Api.Models.Dtos;
 using Fcz.Navi.Api.Models.Entities;
 using Fcz.Navi.Api.Models.Extensions;
 using Fcz.Navi.Api.Repositories;
+using Fcz.Navi.Api.Services.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fcz.Navi.Api.Services
@@ -26,14 +27,8 @@ namespace Fcz.Navi.Api.Services
 		public async Task Create(Link link)
 		{
 			link.CreateTime = DateTime.Now;
-			if (link.Icon.IsNullOrEmpty())
-			{
-				// TODO FCZ 20200314 解析favicon
-			}
-			if (link.BgColor.IsNullOrEmpty())
-			{
-				// TODO FCZ 20200314 解析背景色主色
-			}
+
+			await DetectIcon(link);
 
 			await _repo.Insert(link);
 		}
@@ -50,7 +45,22 @@ namespace Fcz.Navi.Api.Services
 			link.BgColor = dto.BgColor.IsNullOrEmpty() ? link.BgColor : dto.BgColor;
 			link.Icon = dto.Icon.IsNullOrEmpty() ? link.Icon : dto.Icon;
 
+			await DetectIcon(link);
+
 			await _repo.Update(link);
+		}
+
+		private async Task DetectIcon(Link link)
+		{
+			if (link.Icon.IsNullOrEmpty())
+			{
+				link.Icon = await LinkHelper.GetFavicon(link.Url);
+			}
+
+			if (link.BgColor.IsNullOrEmpty() && !link.Icon.IsNullOrEmpty())
+			{
+				link.BgColor = await LinkHelper.GetMainColor(link.Icon);
+			}
 		}
 
 		public async Task Delete(int id)
