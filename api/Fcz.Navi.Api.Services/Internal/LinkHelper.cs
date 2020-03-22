@@ -35,8 +35,8 @@ namespace Fcz.Navi.Api.Services.Internal
 
 			async Task<string> GetFromContent()
 			{
-				using var hc = new HttpClient();
-				var content = await hc.GetStringAsync(uri);
+				using var hc = new HttpClient { Timeout = TimeSpan.FromSeconds(2) };
+				var content = await hc.TryGetStringAsync(uri);
 				var reg = new Regex("<link.*?href=\"(.*)\\.ico");
 				var match = reg.Match(content);
 				if (match.Success)
@@ -56,14 +56,41 @@ namespace Fcz.Navi.Api.Services.Internal
 					$"{uri.Scheme}://{domain.RegistrableDomain}/{iconPath}",
 					$"{uri.Scheme}://www.{domain.RegistrableDomain}/{iconPath}"
 				};
-				using var hc = new HttpClient();
+				using var hc = new HttpClient { Timeout = TimeSpan.FromSeconds(1) };
 				foreach (var link in links)
 				{
-					var res = await hc.GetAsync(link);
-					if (res.IsSuccessStatusCode)
+					var res = await hc.TryGetAsync(link);
+					if (res!=null && res.IsSuccessStatusCode)
 						return link;
 				}
 				return null;
+			}
+		}
+	}
+
+	internal static class HttpClientExtensions
+	{
+		internal static async Task<HttpResponseMessage> TryGetAsync(this HttpClient client, string url)
+		{
+			try
+			{
+				return await client.GetAsync(url);
+			}
+			catch
+			{
+					return null;
+			}
+		}
+
+		internal static async Task<string> TryGetStringAsync(this HttpClient client, Uri url)
+		{
+			try
+			{
+				return await client.GetStringAsync(url);
+			}
+			catch
+			{
+				return string.Empty;
 			}
 		}
 	}

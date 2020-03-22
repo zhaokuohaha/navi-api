@@ -6,10 +6,10 @@
           v-show="showGetOne"
           class="pointer logo"
           @click="$modal.show('adduser')"
-          src="./assets/getone.jpg"
+          src="./assets/getone1.png"
           alt="整一个"
         />
-        <img v-show="!showGetOne" alt="logo" src="./assets/logo.png" class="logo pointer" />
+        <img v-show="!showGetOne" alt="logo circle" src="./assets/logo.png" class="logo circle" />
       </span>
     </div>
     <HelloWorld />
@@ -55,6 +55,7 @@ export default class App extends Vue {
     if (res) {
       this.$modal.hide("adduser");
       this.$router.push(`/${this.user.name}`);
+      window.location.assign(this.$route.fullPath);
     }
   }
 
@@ -88,6 +89,8 @@ export default class App extends Vue {
 .logo {
   width: 8rem;
   height: 8rem;
+}
+.circle {
   border-radius: 8rem;
 }
 

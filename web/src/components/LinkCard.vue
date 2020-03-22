@@ -1,13 +1,17 @@
 <template>
-  <div class="link-card card" :style="customStyle" @click="openlink()">
-    <img class="c-icon" :src="iconlink" alt srcset />
-    <div class="c-title">{{linkinfo.title}}</div>
-    <div class="link-option" v-show="edit">
-      <div class="lo-edit" @click.stop="editlink">
-        <img src="../assets/edit.svg" alt class="img-icon" />
-      </div>
-      <div class="lo-delet" @click.stop="deletelink">
-        <i class="icono-trash" style="color: tomato;"></i>
+  <div>
+    <div class="card link-card-bg" :style="customStyle">
+      <div class="link-card" @click="openlink()">
+        <img class="c-icon" :src="iconlink" alt srcset />
+        <div class="c-title">{{linkinfo.title}}</div>
+        <div class="link-option" v-show="edit">
+          <div class="lo-edit" @click.stop="editlink">
+            <img src="../assets/edit.svg" alt class="img-icon" />
+          </div>
+          <div class="lo-delet" @click.stop="deletelink">
+            <i class="icono-trash" style="color: tomato;"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -48,6 +52,13 @@ export default class LinkCard extends Vue {
 </script>
 
 <style>
+.link-card-bg {
+  height: 6rem;
+  width: 12rem;
+  margin: 1rem 0.5rem;
+  border-radius: 4px;
+}
+
 .link-card {
   position: relative;
   display: flex;
@@ -57,8 +68,7 @@ export default class LinkCard extends Vue {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  margin: 1rem 0.5rem;
-  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .link-card:hover {

@@ -26,7 +26,8 @@ namespace Fcz.Navi.Api.Repositories
 
 		public async Task<User> Get(string name)
 		{
-			return _context.Users.FirstOrDefault(u => u.Name == name && !u.DeleteTime.HasValue);
+			var user = _context.Users.FirstOrDefault(u => u.Name == name && !u.DeleteTime.HasValue);
+			return user;
 		}
 	}
 }

@@ -30,8 +30,13 @@ namespace Fcz.Navi.Api.WebApi.Controllers
         [Authorize]
         public async Task<ActionResult> AddTab([FromBody] Tab tab)
         {
+            var user = User.FindFirst("Id").Value;
+            if (!int.TryParse(user, out var userId))
+                return Unauthorized($"{user} 不存在");
+
+            tab.UserId = userId;
             await _tabService.Create(tab);
-            return Ok();
+            return Ok(user);
         }
 
         [HttpDelete("{id}")]
