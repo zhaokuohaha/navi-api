@@ -1,7 +1,7 @@
 #  api
 docker build -t navi_api .
 
-docker run -d  -p 5002:5002  --name navi_api  navi_api
+docker run -d  -p 5002:5002 --rm  --name navi_api  navi_api
 
 
 # web

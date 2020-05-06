@@ -11,5 +11,5 @@ export default new Router({
         path: '/:user',
         component: require('./components/HelloWorld.vue').default,
     }],
-    mode: "history"
+    mode: "hash"
 })
