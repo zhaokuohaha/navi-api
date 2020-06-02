@@ -15,7 +15,7 @@ WORKDIR /app
 COPY --from=build /app/navi/out ./
 
 EXPOSE 5002
-ENV ASPNETCORE_URLS http://*:5002
-ENV ASPNETCORE_ENVIRONMENT=production
+ENV ASPNETCORE_URLS http://*:5002 \
+    ASPNETCORE_ENVIRONMENT=production
 
 ENTRYPOINT ["dotnet", "Fcz.Navi.Api.WebApi.dll"]

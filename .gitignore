@@ -17,7 +17,6 @@ yarn-error.log*
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
 /server/config.py
 __pycache__

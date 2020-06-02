@@ -1,11 +1,26 @@
+#!/bin/bash
+
+mode = $0
+
 #  api
-docker build -t navi_api .
+if [mode == 'api']
+then
+    buildapi
+elif [mode == 'web']
+then
+    buildweb
+elif [mode == '' || mode == 'all']
+    buildapi && buildweb
+else
+    echo '输入错误'
+fi
 
-docker run -d  -p 5002:5002 --rm  --name navi_api  navi_api
+buildapi(){
+    docker build -t navi_api .
+    docker run -d  -p 5002:5002 --rm  --name navi_api  navi_api
+}
 
-
-# web
-
-docker build -t navi .
-
-docker run -d -it -p 5003:5003 --rm --name navi navi
+buildweb(){
+    docker build -t navi .
+    docker run -d -it -p 5003:5003 --rm --name navi navi
+}

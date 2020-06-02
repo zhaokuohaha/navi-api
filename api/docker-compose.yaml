@@ -1,0 +1,18 @@
+version: "3"
+
+networks:
+    web:
+      driver: ${NETWORKS_DRIVER}
+    api:
+      driver: ${NETWORKS_DRIVER}
+
+services: 
+    naviapi:
+        container_name: "navi_api"
+        build: 
+            context: .
+        expose: 
+            - "5002"
+        neworks:
+            - api
+        
