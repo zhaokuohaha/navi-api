@@ -13,6 +13,13 @@ services:
             context: .
         expose: 
             - "5002"
+        ports: 
+            - "5002:5002"
         neworks:
             - api
+        environment: 
+            ASPNETCORE_URLS: "http://*:5002"
+            ASPNETCORE_ENVIRONMENT: "production"
+        depends_on: 
+            - redis
         
