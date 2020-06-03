@@ -2,24 +2,23 @@ version: "3"
 
 networks:
     web:
-      driver: ${NETWORKS_DRIVER}
+      driver: "bridge"
     api:
-      driver: ${NETWORKS_DRIVER}
+      driver: "bridge"
 
 services: 
     naviapi:
         container_name: "navi_api"
+        image: "navi_api"
         build: 
             context: .
+            dockerfile: /home/websites/navi/src/api/Dockerfile
         expose: 
             - "5002"
         ports: 
             - "5002:5002"
-        neworks:
+        networks:
             - api
         environment: 
             ASPNETCORE_URLS: "http://*:5002"
             ASPNETCORE_ENVIRONMENT: "production"
-        depends_on: 
-            - redis
-        
